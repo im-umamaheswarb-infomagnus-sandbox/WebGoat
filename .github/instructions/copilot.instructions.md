@@ -1,14 +1,16 @@
+
 ---
+name: "Copilot Instructions"
 description: "Project-wide guidance for OWASP WebGoat development, intentionally vulnerable lessons, Maven modules, testing, and security."
 applyTo: "**/*"
 ---
-
-# WebGoat Project Instructions
+# Copilot Instructions
 
 ## Project Context
 
 - WebGoat is an OWASP application intentionally designed to be vulnerable for security education. Preserve lesson vulnerabilities and expected challenge behavior unless a task explicitly asks to change them.
 - Keep changes focused on the requested task and the owning Maven module. Preserve existing APIs and lesson contracts unless a behavior change is explicitly requested.
+- Use Copilot to assist with code generation, but always review and validate suggestions for security and correctness.
 
 ## Development and Testing
 

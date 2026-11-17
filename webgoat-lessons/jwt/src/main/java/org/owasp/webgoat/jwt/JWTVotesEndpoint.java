@@ -23,7 +23,6 @@
 package org.owasp.webgoat.jwt;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.TextCodec;
@@ -122,8 +121,7 @@ public class JWTVotesEndpoint extends AssignmentEndpoint {
             value.setSerializationView(Views.GuestView.class);
         } else {
             try {
-                Jwt jwt = Jwts.parser().setSigningKey(JWT_PASSWORD).parse(accessToken);
-                Claims claims = (Claims) jwt.getBody();
+                Claims claims = Jwts.parser().setSigningKey(JWT_PASSWORD).parseClaimsJws(accessToken).getBody();
                 String user = (String) claims.get("user");
                 if ("Guest".equals(user) || !validUsers.contains(user)) {
                     value.setSerializationView(Views.GuestView.class);
@@ -145,8 +143,7 @@ public class JWTVotesEndpoint extends AssignmentEndpoint {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } else {
             try {
-                Jwt jwt = Jwts.parser().setSigningKey(JWT_PASSWORD).parse(accessToken);
-                Claims claims = (Claims) jwt.getBody();
+                Claims claims = Jwts.parser().setSigningKey(JWT_PASSWORD).parseClaimsJws(accessToken).getBody();
                 String user = (String) claims.get("user");
                 if (!validUsers.contains(user)) {
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -167,8 +164,7 @@ public class JWTVotesEndpoint extends AssignmentEndpoint {
             return failed(this).feedback("jwt-invalid-token").build();
         } else {
             try {
-                Jwt jwt = Jwts.parser().setSigningKey(JWT_PASSWORD).parse(accessToken);
-                Claims claims = (Claims) jwt.getBody();
+                Claims claims = Jwts.parser().setSigningKey(JWT_PASSWORD).parseClaimsJws(accessToken).getBody();
                 boolean isAdmin = Boolean.valueOf((String) claims.get("admin"));
                 if (!isAdmin) {
                     return failed(this).feedback("jwt-only-admin").build();
